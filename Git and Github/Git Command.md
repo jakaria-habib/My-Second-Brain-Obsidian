@@ -42,3 +42,8 @@ git pull
 	 git branch -M main
 	 git remote add origin https://github.com/Khanasif2642/test456.git
 	 git push -u origin main
+## pull system form github
+
+1. go folder in computer where you want to pull the github project and write the below code  
+git clone "copy project's url from github and paste in the middle of inverted comma"
+
