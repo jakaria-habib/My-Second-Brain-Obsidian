@@ -18,8 +18,21 @@
                 "source": false
               }
             }
+          },
+          {
+            "id": "f6d6c25a2a968470",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Git and Github/Git Command.md",
+                "mode": "source",
+                "source": false
+              }
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -146,11 +159,12 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "1da1881b542c4392",
+  "active": "f6d6c25a2a968470",
   "lastOpenFiles": [
+    "HTML CSS/1. Navbar.md",
+    "Git and Github/Git Command.md",
     "HTML CSS/mark down code.md",
     "Command Prompt/1. cmd details.md",
-    "Git and Github/Git Command.md",
     "PHP Laravel/2. Laravel Note.md",
     "PHP Laravel/1. Laravel Project Creation.md",
     "Untitled.md",
@@ -159,7 +173,6 @@
     "HTML CSS/4. Form.md",
     "HTML CSS/3. Card Design.md",
     "Database Mysql/1. db connection process.md",
-    "HTML CSS/1. Navbar.md",
     "Database Mysql",
     "HTML CSS/2. Slider.md",
     "Command Prompt",

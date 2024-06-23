@@ -38,14 +38,20 @@ git pull
 	git config --global user.email "your user email"
 4. git add --all
 5. git commit -m "first commit"
-6. from now get code form github account 
+6. jodi new project github a rakha lage tahole ei code follow koro ,from now get code form github account 
 	 git branch -M main
 	 git remote add origin https://github.com/Khanasif2642/test456.git
 	 git push -u origin main
+7.  jodi project already thake and code again gitgub a rakha lage tahole etai final command
+     `git push -u origin main`	
+
+
 ## pull system form github
 
 1. go folder in computer where you want to pull the github project and write the below code  
 git clone "copy project's url from github and paste in the middle of inverted comma"
+
+
 
 ## how to install form github project on laravel php storm
 
