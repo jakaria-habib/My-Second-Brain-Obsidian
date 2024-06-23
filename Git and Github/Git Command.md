@@ -53,14 +53,15 @@ git clone "copy project's url from github and paste in the middle of inverted co
 
 
 
-## how to install form github project on laravel php storm
+## how to install project form github on laravel phpstorm
 
 1. clone or download project form github and keep it on computer folder. unzip the project if you download it.
-2.  folder theke cmd on kore then write this code jekono akta dilei hobe `composer install / composer update`
-3. tarpor project on koro phpstorm theke and then `.env.example` file ta k rename koro likho  `.env`
+2.  folder theke cmd on kore then write this code jekono akta dilei hobe ` composer update`
+3. tarpor project on koro phpstorm theke and then `.env.example` file ta k rename koro likho  `.env`  jodi rename option refactor theke na ase tahole age db name connectio agula on koro dao. 
 4. tarpor db _connection= mysql, db_database= give db name, db_username = root , db_password = (faka rakho)
 5. phpmyadmin a giye database create koro
 6. then cmd prompt theke command likho `php artisan migrate`
 7. then cmd  a giye likho  `php artisan key:generate`
-8. then cmd  a giye likho  `php artisan storage:link`
-9. then cmd  a giye likho  `php artisan serve` finshed now
+
+1. then cmd  a giye likho  `php artisan storage:link`
+2. then cmd  a giye likho  `php artisan serve` finshed now
