@@ -81,8 +81,7 @@ if (categoryName.length === 0) {
 }
 ```
 
-## 2. Laravel Notification Code
-
+## 2. Laravel Notification Code do it not yet
 ## 3. JavaScript Show Loader and Hide Loader
 
 1  Add this in Laravel blade file  
@@ -137,4 +136,38 @@ function checkValidation() {
         return true;  
     }  
 }
+```
+
+## 5. Dropdown List with Image code
+```Html
+{{-- Html code Start--}}  
+<div class="col-md-4 align-items-center">  
+    <label class="control-label dashboardBrandList">Select Your Brand </label>  
+    <select name="brand_name" onchange="sessionUpdate('brand_id',this.value)" id="brand_name" class="form-select" aria-label="Default select example" style="padding: 8px;margin-bottom: 11px;">  
+        <option value="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;All Brands List</option>  
+        @foreach($brands as $brand)  
+            <option value="{{$brand->id}}" data-image="{{asset( $brand->logo) }}">{{ $brand->name }}</option>  
+        @endforeach  
+    </select>  
+</div>  
+{{-- Html code End --}}  
+  
+  
+//JavaScript code Start  
+<script>  
+    $(document).ready(function () {  
+        $('#brand_name').select2({  
+            templateResult: formatOption,  
+            templateSelection: formatOption,  
+        });  
+        function formatOption(option) {  
+            if (!option.id) {  
+                return option.text;  
+            }  
+            const imgUrl = $(option.element).data('image');  
+            return $(`<span class="custom-option"><img src="${imgUrl}" alt="icon" />${option.text}</span>`);  
+        }  
+    });  
+</script>  
+//JavaScript code End
 ```
