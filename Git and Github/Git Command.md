@@ -1,3 +1,21 @@
+## 1.  New Project github a rakhar jonno code
+```php
+1. github a giye new repository banano lagbe jekono name diye repository banao 
+2. ebar project ar terminal a asbe , ese nicher command gulo dibe
+   1. git init
+   2. git status
+   3. git add .
+   4. git status
+   5. git commit -m "first commit"
+   6. ebar github a abar jaba then okhane j repository create korcho oikhane 3 ta code        ache oigulo dilei hobe jmn "...or create a new repository on the command line" ei       likha ache j table a oitar last 3 ta line terminal a dilei hoye jabe
+   7. nicher 3 ta line 
+3. git branch -M main
+4. git remote add origin https://github.com/jakaria-habib/hee.git 
+   (eta repository name onujayi different hoy)
+6. git push -u origin main 
+```
+
+
 
 /*git initialization and config*/
 git --version
