@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PHP Laravel/Laravel Final Note.md",
+                "file": "Git and Github/Git Command.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Laravel Final Note"
+              "title": "Git Command"
             }
           },
           {
@@ -27,16 +27,15 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "PHP Laravel/Laravel Final Code Note.md",
+                "file": "PHP Laravel/1. Laravel Project Creation.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Laravel Final Code Note"
+              "title": "1. Laravel Project Creation"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
@@ -92,7 +91,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 244.5
+    "width": 276.5
   },
   "right": {
     "id": "c568e94315b2e70e",
@@ -108,7 +107,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Command Prompt/1. cmd details.md",
+                "file": "PHP Laravel/2. Laravel Note-1.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -118,7 +117,7 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for 1. cmd details"
+              "title": "Backlinks for 2. Laravel Note-1"
             }
           },
           {
@@ -177,20 +176,21 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "e85ac5c440798dbd",
+  "active": "3e27437a29d6f4d3",
   "lastOpenFiles": [
-    "PHP Laravel/Laravel Code Documentation.md",
-    "PHP Laravel/Laravel Final Code Note.md",
-    "Password.md",
-    "PHP Laravel/3.Laravel Note-2.md",
     "PHP Laravel/2. Laravel Note-1.md",
+    "PHP Laravel/Laravel Final Code Note.md",
+    "Git and Github/Git Command.md",
+    "PHP Laravel/3.Laravel Note-2.md",
+    "PHP Laravel/Laravel Code Documentation.md",
+    "PHP Laravel/Laravel Final Note.md",
+    "PHP Laravel/1. Laravel Project Creation.md",
+    "Password.md",
     "facebook.com.md",
     "HTML CSS/mark down code.md",
     "HTML CSS/mark down code 1.md",
     "Command Prompt/1. cmd details.md",
-    "PHP Laravel/1. Laravel Project Creation.md",
     "HTML CSS/mark down code 1 1.md",
-    "Git and Github/Git Command.md",
     "HTML CSS/1. Navbar.md",
     "Ostad Laravel/Hasin vai video Note/Hasin vai.md",
     "Database Mysql/1. db connection process.md",
@@ -211,7 +211,6 @@
     "JavaScript OOP/10. Method Overloading.md",
     "JavaScript OOP/9. Overriding.md",
     "JavaScript OOP/8. Inheritance Static Property.md",
-    "JavaScript OOP/7. Inheritance Constructor.md",
     "PHP",
     "JavaScript Debugging",
     "JavaScript OOP",

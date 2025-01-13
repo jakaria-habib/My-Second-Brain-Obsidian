@@ -1,5 +1,5 @@
 
-#### 1. Form ar vetor jekono button thakle click korle submit hoye jabe kintu close button submit na howar jonno button type= button dite hoy.
+### 1. Form ar vetor jekono button thakle click korle submit hoye jabe kintu close button submit na howar jonno button type= button dite hoy.
 ```html
 <form>
 	<button type="submit" class="commonSaveButton">Update</button>
@@ -28,8 +28,7 @@
 ```html 
 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 ```
-
-4.   
+### 4.   modal css
 <style>  
     .modal-content {  
         transition: transform 0.3s ease, opacity 0.3s ease;  
