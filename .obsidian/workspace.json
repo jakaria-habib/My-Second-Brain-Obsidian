@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Git and Github/Git Command.md",
+                "file": "PHP Laravel/Laravel Final Code Note.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "Git Command"
+              "title": "Laravel Final Code Note"
             }
           },
           {
@@ -178,11 +178,18 @@
   },
   "active": "3e27437a29d6f4d3",
   "lastOpenFiles": [
-    "PHP Laravel/2. Laravel Note-1.md",
+    "date_picker_img.png",
+    "date_pciker 1.png",
+    "date_pciker.png",
+    "date_picker_img 1.png",
+    "download (5).jpeg",
     "PHP Laravel/Laravel Final Code Note.md",
+    "PHP Laravel/Laravel Code Documentation.md",
+    "PHP Laravel/2. Laravel Note-1.md",
+    "Untitled.md",
+    "PHP Laravel/dsdsds.md",
     "Git and Github/Git Command.md",
     "PHP Laravel/3.Laravel Note-2.md",
-    "PHP Laravel/Laravel Code Documentation.md",
     "PHP Laravel/Laravel Final Note.md",
     "PHP Laravel/1. Laravel Project Creation.md",
     "Password.md",
@@ -208,9 +215,6 @@
     "PHP Laravel",
     "JavaScript OOP/12. Abstraction.md",
     "JavaScript OOP/11. Polymorphism.md",
-    "JavaScript OOP/10. Method Overloading.md",
-    "JavaScript OOP/9. Overriding.md",
-    "JavaScript OOP/8. Inheritance Static Property.md",
     "PHP",
     "JavaScript Debugging",
     "JavaScript OOP",

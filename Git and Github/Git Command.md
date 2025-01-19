@@ -90,3 +90,10 @@ git add index.html
 /* git pull */
 git pull
 ```
+## 8. github theke repository delete korar code
+```js
+1. repository list theke delete korte chaoa repository click korte hobe
+2. tarpor uporer row te settings a click korte hobe
+3. tarpor akbare niche jabe then Delete this repository te click korte hobe
+4. tarpor instruction onujayi 3/4 ta step agalei delete hoyejabe.
+```
