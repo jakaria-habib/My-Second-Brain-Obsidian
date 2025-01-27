@@ -1927,51 +1927,6 @@ async function uploadLibraryImage(){
         }  
     }
 ```
-## 27. 
-```php
-
-if($request->file('image')){  
-    $imageUrl = ImageHelper::uploadImage('uploads', $request->file('image'));  
-    $data['profile_photo'] = $imageUrl;  
-}  
-  
-  
-public static function uploadImage($folder, $file)  
-{  
-    $filePath = 'premiumad/'. $folder . '/' . uniqid() . '.' . $file->getClientOriginalExtension();  
-  
-    // Upload to DigitalOcean Spaces  
-    $uploaded = Storage::disk('s3')->put($filePath, file_get_contents($file), 'public');  
-    return $uploaded ? $filePath : null;  
-    // return $uploaded ? Storage::disk('s3')->url($filePath) : null;  
-}  
-  
-  
-  
-public static function deleteImage($filePath)  
-{  
-    return Storage::disk('s3')->delete($filePath);  
-}  
-  
-  
-public static function getImageUrl($filePath)  
-{  
-    return Storage::disk('s3')->url($filePath);  
-}
-
-
-// image helper my code
-//        if ($file instanceof \Illuminate\Http\UploadedFile) {  
-//            $filePath = 'premiumad/' . $folder . '/' . uniqid() . '.' . $file->getClientOriginalExtension();  
-//        }  
-//        else {  
-//            $extension = pathinfo($file->getRealPath(), PATHINFO_EXTENSION);  
-//            $filePath = 'premiumad/' . $folder . '/' . uniqid() . '.' . $extension;  
-//        }  
-//  
-//        $uploaded = Storage::disk('s3')->put($filePath, file_get_contents($file), 'public');  
-//        return $uploaded ? $filePath : null;
-```
 ## 28. Moinul vai image file create edit update
 ```php
 
@@ -2208,7 +2163,7 @@ public function createPartnerBrand(Request $request)
     }  
 }
 ```
-## 29c. Date Picker Range dile se onujayi image db hote niye asbe,abar image k delete,download kora jabe code
+## 29c. Date Picker Range dile se onujayi image db hote niye asbe,abar image k delete,download kora jabe ei code diye
 ![[date_picker_img 1.png]]
 ```html
 <!-- Date Range Picker select button start -->  
@@ -2384,4 +2339,250 @@ $(document).ready(function () {
 	    }  
 	} 
 // for download end
+```
+## 30. map function use kora hoyeche ekhane , controller a jodi map function use kora hoy tahole image ar extra address like asset ta ekhan thekei diye deya hoy r jodi controller a map use na kori tahole js a giye assest add kore dite hobe. ekhane comment out korata map ar kaj. ekhane ami map use kori nai js a giye kaj korchi. 
+```php
+    public function fetchImageByBrandId(Request $request){  
+        try{  
+  
+//            if($request->brand_id){  
+//                $images = PartnerImage::where('ref_id',$request->brand_id)->get()->map(function ($image) {  
+//                    $image->image_path = asset('/' . $image->image_path);  
+//                    return $image;  
+//                });  
+//            }else {  
+//                $images = PartnerImage::all()->map(function ($image) {  
+//                    $image->image_path = asset('/' . $image->image_path);  
+//                    return $image;  
+//                });  
+//            }  
+            if($request->brand_id){  
+                $images = PartnerImage::where('ref_id',$request->brand_id)->orderBy('id','desc')->get();  
+            }else {  
+                $images = PartnerImage::orderBy('id','desc')->get();  
+            }  
+            return response()->json(['status' => 'success', 'message' => 'Brand Image List','images'=>$images]);  
+        }  
+         catch (\Illuminate\Validation\ValidationException $e) {  
+            // Handle validation errors , unique kina check korar jonno  
+            return response()->json(['error' => 'Validation failed.', 'details' => $e->errors()], 422);  
+        }  
+        catch (\Exception $e) {  
+                // Handle other exceptions (e.g., database errors)  
+            return response()->json(['error' => 'An unexpected error occurred.', 'details' => $e->getMessage()], 500);  
+        }  
+    }
+```
+
+```js
+$('#brand_name_search').on('change', async function () {  
+
+    let brand_id = $(this).val();  
+    let res = await axios.post('/partner/fetch-brand-image', { brand_id: brand_id });  
+  
+    const container = document.getElementById('libraryImage');  
+    container.innerHTML = '';  
+  
+    if (!res.data.images || res.data.images.length === 0) {  
+        errorToast('No images available for this Brand.');  
+        return;  
+    }  
+  
+    res.data.images.forEach((item) => {  
+  
+        const div = document.createElement('div');  
+        div.className = 'col-md-3 col-sm-6';  
+  
+        const image_path = `{{ asset('') }}${item.image_path}`;  
+  
+        div.innerHTML = `  
+            <div class="image-card">                
+	            <img src="${image_path}" alt="Image" class="img-fluid picker-image" onclick="selectLibraryImage('${image_path}')">  
+                <div class="overlay-icon"><i class="bi bi-heart-fill"></i></div>                
+                <a href="/partner/download/${btoa(item.image_path)}" data-id="${item['id']}" class="download-tag" style="text-decoration: none !important;">Download</a>  
+                <button data-id="${item['id']}" class="delete-tag brandDeleteBtn">Delete</button>  
+            </div>        `;  
+        container.appendChild(div);  
+    });  
+});
+```
+## 31. Laravel single table Migration and Rollback code 
+```php
+
+	// specific migration
+	php artisan migrate --path=database/migrations/2025_01_11_123456_create_table_name.php
+	// specific rollback
+	php artisan migrate:rollback --path=/database/migrations/2024_01_01_123456_create_table_name.php
+	
+```
+## 32. laravel image create code
+```php
+$image = $request->file('image');  
+$imageExtension       = $image->getClientOriginalExtension(); // .png  
+$imageName            = time().'.'.$imageExtension; //394833.png  
+$directory            = 'library-upload-images/';  
+$image->move($directory, $imageName);  
+$imageURL = $directory.$imageName;
+```
+## ***33. Laravel controller code with request validation alada rakhbe, image gulo Helper method a rakhbe. 
+```php
+
+// Create/ store controller Code
+ public function store(StoreUserRequest $request) {
+ 
+	$validated = $request->validated();
+	if($request->hasFile('image')){
+		$imageUrl = ImageHelper::uploadImage('uploads', $request->file('image'));
+		$validated['image'] = $imageUrl;
+	}
+	$validated['password'] = Hash::make($validated['password']);
+
+	User::create($validated);
+	return response()->json(['status' => 'success', 'message' => 'User created successfully' ]);
+}
+
+// Update Controller code
+public function update(StoreUserRequest $request, $id)
+{
+    $user = User::findOrFail($id); 
+    $validated = $request->validated();
+
+    if ($request->hasFile('image')) {
+        if ($user->image) {
+            ImageHelper::deleteImage($user->image);
+        }
+        $imageUrl = ImageHelper::uploadImage('uploads', $request->file('image'));
+        $validated['image'] = $imageUrl;
+    }
+	// uporer line tar short kore evabeo likha jay
+	// if ($request->hasFile('image')) {
+	//    if ($user->image) ImageHelper::deleteImage($user->image);
+	//    $validated['image'] = ImageHelper::uploadImage('uploads', $request->file('image'));
+	// }
+
+    if (!empty($validated['password'])) {
+        $validated['password'] = Hash::make($validated['password']);
+    } else {
+        unset($validated['password']);
+    }
+    $user->update($validated);
+    return response()->json(['status' => 'success', 'message' => 'User updated successfully']);
+}
+
+// nicher command diye request create kore then StoreUserRequest create kore then etar vitore nicher code gulo likhbe
+php artisan make:request StoreUserRequest
+
+public function authorize() {
+	return true;
+}
+
+// StoreUserRequest ar code 
+public function rules() {
+    $id = $this->route('id') ?? $this->input('id');
+    return [
+        'name' => 'required|string|max:255|unique:users,name,' . ($Id ?? 'NULL'),
+        'age' => 'nullable|integer|min:0|max:200',
+        'email' => 'required|email|unique:users,email,' . ($Id ?? 'NULL'),
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        'password' => [$this->isMethod('post') ? 'required' : 'nullable', 'string', 'min:8', 'confirmed'],
+    ];
+}
+public function messages() { 
+	return [ 
+		'name.required' => 'The name field is required.',
+		'name.unique' => 'This name is already taken. Please choose another one.',
+		'email.required' => 'The email field is required.',
+		'email.unique' => 'This email is already registered. Please use a different email.',
+		'password.required' => 'The password field is required.',
+		'password.confirmed' => 'The password confirmation does not match.',
+		'image.mimes' => 'The image must be a file of type: jpg, jpeg, png, gif.',
+		'image.max' => 'The image size should not exceed 2MB.',
+		]; 
+}
+
+// Image Helper a rakho ei part tuku. App/Helpers/ImageHelper er vetore ImageHelper name ar akta class create kore nite hobe prothome
+public static function uploadImage($folder, $file){
+	$fileName = uniqid('img-',true) . '.' . $file->getClientOriginalExtension();
+	$uploaded = $file->move(public_path($folder), $fileName);
+	return $uploaded ? 'uploads/' . $fileName : null;
+}	
+
+// Delete Image Helper code 
+public static function deleteImage($path) {
+    $fullPath = public_path($path);
+    if (file_exists($fullPath)) {
+        unlink($fullPath);
+        return true;
+    }
+    return false;
+}
+
+```
+## ***34. Controller ar vetorei request validation and image soho sob rekhe kora, uporer  code ta follow koro
+```php
+// Store code laravel
+public function store(Request $request) {
+
+    $validated = $request->validate([
+        'name' => 'required|string|max:255|unique:users,name',
+        'email' => 'required|email|unique:users,email',
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        'password' => 'required|string|min:8|confirmed',
+    ], [
+        'name.required' => 'The name field is required.',
+        'name.unique' => 'This name is already taken. Please choose another one.',
+        'email.required' => 'The email field is required.',
+        'email.unique' => 'This email is already registered. Please use a different email.',
+        'password.required' => 'The password field is required.',
+        'password.confirmed' => 'The password confirmation does not match.',
+        'image.mimes' => 'The image must be a file of type: jpg, jpeg, png, gif.',
+        'image.max' => 'The image size should not exceed 2MB.',
+    ]);
+    if ($request->hasFile('image')) {
+        $file = $request->file('image');
+        $imageUrl = 'uploads/' . uniqid('img-', true) . '.' . $file->getClientOriginalExtension();
+        $file->move(public_path('uploads'), $imageUrl);
+        $validated['image'] = $imageUrl;
+    }
+    $validated['password'] = Hash::make($validated['password']);
+    
+    $user = User::create($validated);
+    
+    return response()->json(['status' => 'success', 'message' => 'User created successfully', 'user' => $user]);
+}
+
+// Update code laravel
+ public function update(Request $request) {
+	  
+   $validated = $request->validate([
+		'name' => 'required|string|max:255|unique:users,name',
+		'email' => 'required|email|unique:users,email',
+		'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+		'password' => 'required|string|min:8|confirmed',
+	], [
+		'name.required' => 'The name field is required.',
+		'name.unique' => 'This name is already taken. Please choose another one.',
+		'email.required' => 'The email field is required.',
+		'email.unique' => 'This email is already registered. Please use a different email.',
+		'password.required' => 'The password field is required.',
+		'password.confirmed' => 'The password confirmation does not match.',
+		'image.mimes' => 'The image must be a file of type: jpg, jpeg, png, gif.',
+		'image.max' => 'The image size should not exceed 2MB.',
+	]);
+
+	if ($request->hasFile('image')) {
+	    if ($user->image && file_exists(public_path($user->image))) {
+	        unlink(public_path($user->image));
+	    }
+	    $file = $request->file('image');
+	    $imageUrl = 'uploads/' . uniqid('img-', true) . '.' . $file->getClientOriginalExtension();
+	    $file->move(public_path('uploads'), $imageUrl);
+	    $validated['image'] = $imageUrl;
+	}
+	$validated['password'] = Hash::make($validated['password']);
+	
+	$user = User::create($validated);
+	
+	return response()->json(['status' => 'success', 'message' => 'User created successfully','user' = $user ]);
+}
 ```
