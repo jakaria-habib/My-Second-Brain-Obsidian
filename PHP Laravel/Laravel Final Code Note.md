@@ -1,4 +1,4 @@
-## ***1. Laravel Full Code with request validation alada rakhbe, Image gulo Helper method a rakhbe  
+## ***1. Full Laravel Code with request validation alada rakhbe, Image gulo Helper method a rakhbe  
 ```html
 // Form start
 <div class="card">  
@@ -269,7 +269,277 @@ public function store(Request $request) {
 	}
 }
 ```
-## 3. Java Script and Laravel Notification Code
+## 3. ***Full Axios Code with request validation alada rakhbe, Image gulo Helper method a rakhbe 
+```html
+<button data-bs-toggle="modal" data-bs-target="#create-modal" class="createBrandButton">  
+    <i class="bi bi-plus-circle"></i> Create Brand  
+</button>
+
+<div class="modal animated zoomIn modal-xl smooth-modal" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">  
+    <div class="modal-dialog modal-dialog-centered modal-md">  
+        <div class="modal-content">  
+            <div class="modal-header">  
+                <h6 class="modal-title" id="exampleModalLabel1">Create Brand</h6>  
+            </div>            
+            <div class="modal-body">  
+                <form id="save-form">  
+                    <div class="container">  
+                        <div class="row">  
+                            <div class="col-12 p-1">  
+                                <label class="form-label">Brand Name<span class="text-danger">*</span></label>  
+                                <input type="text" name="name" class="form-control" id="name">  
+                            </div> 
+                            <div class="col-12 p-1">  
+                                <label class="form-label">Brand Description<span class="text-danger">*</span></label>  
+                                <input type="text" name="description" class="form-control" id="description">  
+                            </div>                        
+                        </div>                    
+                    </div>                
+                </form>            
+            </div>            
+	        <div class="modal-footer">  
+	            <button id="modal-close" class="btn commonCloseButton" data-bs-dismiss="modal" aria-label="Close">Close</button>  
+	            <button onclick="Save()" id="save-btn" class="btn commonSaveButton" >Save</button>  
+	        </div>       
+        </div>    
+    </div>
+</div>
+```
+
+```js
+// uniquness check korar jonno evabe try catch korte hoy ta na hole axios kaj hobe na.
+async function save() {  
+    let name = document.getElementById('name').value;  
+    let description = document.getElementById('description').value;  
+    
+    if (name.trim().length === 0) {  
+        errorToast("Name is Required !")  
+    } else if (description.trim().length === 0) {  
+        errorToast("Description is Required !")     
+    } else {  
+        try {  
+	        showloader();
+            let res = await axios.post('/partner/team-member-store', {  
+                name: name,  
+                description: description,   
+            });  
+            hideloader();
+            if (res.data['status'] === 'success') {  
+                document.getElementById('modal-close').click();  
+                successToast('Team Member Added successfully')  
+                document.getElementById('save-form').reset();  
+                window.location.reload(); // await getlist(); etao use kora jay, etar mane holo getList k ekhan hote call kora. 
+            } else {  
+                errorToast('Team Member Added Failed')  
+            }  
+        } catch (error) {  
+            // response(error); // eta ekta method, ekhan theke function call kora jabe common ekta function create kore 
+            if (error.response) {  
+                if (error.response.status === 500) {  
+                    errorToast("Server Error: Please try again later.");  
+                } else if (error.response.status === 422) {  // 422 is the status code for validation errors  
+                    let errors = error.response.data.messages;  
+                    for (let key in errors) {  
+                        if (errors.hasOwnProperty(key)) {  
+                            errors[key].forEach(message => {  
+                                errorToast(message);  
+                            });  
+                        }  
+                    }  
+                } else {  
+                    errorToast("Error: " + error.response.data.message || "Something went wrong!");  
+                }  
+            } else {  
+                errorToast(error.response.data.message);  
+            }  
+        }  
+    }  
+}
+```
+
+```php
+// Controller Start
+// Create or store Controller Code Start
+ public function store(StoreUserRequest $request) {
+	try {	
+		$validated = $request->validated();
+		if($request->hasFile('image')){
+			$imageUrl = ImageHelper::uploadImage('uploads', $request->file('image'));
+			$validated['image'] = $imageUrl;
+		}
+		$validated['password'] = Hash::make($validated['password']);
+		
+		User::create($validated);
+		return response()->json(['status' => 'success', 'message' => 'User created successfully' ]);
+		}
+    }
+    catch (\Illuminate\Validation\ValidationException $e) {  
+        // Handle validation errors , unique kina check korar jonno  
+        return response()->json(['error' => 'Validation failed.', 'details' => $e->errors()], 422);  
+    }
+    catch (\Exception $e) { 
+    // Handle other exceptions (e.g., database errors) 
+    return response()->json(['error' => 'An unexpected error occurred.', 'details' => $e->getMessage()], 500); 
+    }
+}
+// Create or store Controller Code End
+
+// Update Controller code Start
+public function update(StoreUserRequest $request, $id) {
+    $user = User::findOrFail($id); 
+    $validated = $request->validated();
+
+    if ($request->hasFile('image')) {
+        if ($user->image) {
+            ImageHelper::deleteImage($user->image);
+        }
+        $imageUrl = ImageHelper::uploadImage('uploads', $request->file('image'));
+        $validated['image'] = $imageUrl;
+    }
+	// uporer line tar short kore evabeo likha jay
+	// if ($request->hasFile('image')) {
+	//    if ($user->image) ImageHelper::deleteImage($user->image);
+	//    $validated['image'] = ImageHelper::uploadImage('uploads', $request->file('image'));
+	// }
+    if (!empty($validated['password'])) {
+        $validated['password'] = Hash::make($validated['password']);
+    } else {
+        unset($validated['password']);
+    }
+    $user->update($validated);
+    return response()->json(['status' => 'success', 'message' => 'User updated successfully']);
+}
+// Update Controller code End
+
+// nicher command diye request create kore then StoreUserRequest create kore then etar vitore nicher code gulo likhbe
+php artisan make:request StoreUserRequest
+
+public function authorize() {
+	return true;
+}
+
+// StoreUserRequest ar code 
+public function rules() {
+    $id = $this->route('id') ?? $this->input('id');
+    return [
+        'name' => 'required|string|max:255|unique:users,name,' . ($Id ?? 'NULL'),
+        'age' => 'nullable|integer|min:0|max:200',
+        'email' => 'required|email|unique:users,email,' . ($Id ?? 'NULL'),
+        'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
+        'password' => [$this->isMethod('post') ? 'required' : 'nullable', 'string', 'min:8', 'confirmed'],
+    ];
+}
+public function messages() { 
+	return [ 
+		'name.required' => 'The name field is required.',
+		'name.unique' => 'This name is already taken. Please choose another one.',
+		'email.required' => 'The email field is required.',
+		'email.unique' => 'This email is already registered. Please use a different email.',
+		'password.required' => 'The password field is required.',
+		'password.confirmed' => 'The password confirmation does not match.',
+		'image.mimes' => 'The image must be a file of type: jpg, jpeg, png, gif.',
+		'image.max' => 'The image size should not exceed 2MB.',
+		]; 
+}
+
+// Image Helper a rakho ei part tuku. App/Helpers/ImageHelper er vetore ImageHelper name ar akta class create kore nite hobe prothome
+public static function uploadImage($folder, $file){
+	$fileName = uniqid('img-',true) . '.' . $file->getClientOriginalExtension();
+	$uploaded = $file->move(public_path($folder), $fileName);
+	return $uploaded ? 'uploads/' . $fileName : null;
+}	
+
+// Delete Image Helper code 
+public static function deleteImage($path) {
+    $fullPath = public_path($path);
+    if (file_exists($fullPath)) {
+        unlink($fullPath);
+        return true;
+    }
+    return false;
+}
+// Controller End
+```
+
+```js
+// Notification code start
+// Add link in the head of html template and Download this link,script from website
+<link href="{{asset('css/toastify.min.css')}}" rel="stylesheet" />
+<script src="{{asset('js/jquery-3.7.0.min.js')}}"></script>
+<script src="{{asset('js/toastify-js.js')}}"></script>
+//  axios use korte chaile may be cdn or axios js code download kore use kora lage jene nibe not sure 
+
+//Add this code in config.js ( Success and Error Toast  JavaScript code )
+function showLoader() {  
+    document.getElementById('loader').classList.remove('d-none')  
+}  
+function hideLoader() {  
+    document.getElementById('loader').classList.add('d-none')  
+}  
+  
+function successToast(msg) {  
+    Toastify({  
+        text: msg,  
+        gravity: "bottom", // `top` or `bottom`  
+        position: "center", // `left`, `center` or `right`  
+        className: "mb-5",  
+        duration: 3000,  
+        style: {  
+            background: "green",  
+        }  
+    }).showToast();  
+}  
+  
+function errorToast(msg) {  
+    Toastify({  
+        text: msg,  
+        gravity: "bottom", // `top` or `bottom`  
+        position: "center", // `left`, `center` or `right`  
+        className: "mb-5",  
+        duration: 3000,  
+        style: {  
+            background: "red", // style er vetore aro onk kichu add kora jabe 
+        }  
+    }).showToast();  
+}
+
+or
+// Alternative code for notification
+function successToast(msg) {  
+    Toastify({  
+		text: msg,  
+        gravity: "bottom", // `top` or `bottom`  
+        position: "center", // `left`, `center` or `right`  
+        className: "mb-5",  
+        style: {  
+            background: "green",  
+            color: "white", 
+            borderRadius: "5px", 
+            padding: "10px 20px", 
+            fontSize: "14px", 
+            zIndex: 99999,
+        }  
+    }).showToast();  
+}  
+function errorToast(msg) {
+	Toastify({
+		text: msg,
+		gravity: "bottom", 
+		position: "center",
+		className: "mb-5",
+		style: {
+			background: "red",
+			color: "white",
+			borderRadius: "5px",
+			padding: "10px 20px",
+			fontSize: "14px",
+			zIndex: 99999,
+		},
+	}).showToast();
+	}
+// notification end
+```
+## 4. Java Script and Laravel Notification Code
 ```html
 // Start JavaScript Notification Code
 
@@ -399,7 +669,7 @@ if (categoryName.length === 0) {
 // controller code ar return amon hote hobe
 return response()->json(['status' => 'success', 'message' => 'User added successfully!']);
 ```
-## 4. JavaScript Show Loader and Hide Loader Code
+## 5. JavaScript Show Loader and Hide Loader Code
 ```JavaScript
 // 1. Add this in view blade file  
 // just for example
@@ -442,7 +712,7 @@ function hideLoader() {
 }
 ```
 
-## 5. Validation Code  Example
+## 6. Validation Code  Example
 
 ```JavaScript 
 if(!checkValidation()){  // this means false
@@ -458,7 +728,7 @@ function checkValidation() {
 }
 ```
 
-## 6. Dropdown list using select option with Select2 with Image
+## 7. Dropdown list using select option with Select2 with Image
 
 ```Html & JavaScript
 // link
@@ -504,7 +774,7 @@ function checkValidation() {
 
 ```
 
-## 7. Normal Modal and Delete Modal form  with Bootstrap
+## 8. Normal Modal and Delete Modal form  with Bootstrap
  ```html
  
 // Normal Modal start
@@ -618,7 +888,7 @@ function checkValidation() {
 
 // Delete Modal End
 ```
-## 8. Eye Icon in password field
+## 9. Eye Icon in password field
 
 ```html 
 //password
@@ -701,197 +971,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-## ***11. Full Axios 
-```html
-<button data-bs-toggle="modal" data-bs-target="#create-modal" class="createBrandButton">  
-    <i class="bi bi-plus-circle"></i> Create Brand  
-</button>
-<div class="modal animated zoomIn modal-xl smooth-modal" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel1" aria-hidden="true">  
-    <div class="modal-dialog modal-dialog-centered modal-md">  
-        <div class="modal-content">  
-            <div class="modal-header">  
-                <h6 class="modal-title" id="exampleModalLabel1">Create Brand</h6>  
-            </div>            
-            <div class="modal-body">  
-                <form id="save-form">  
-                    <div class="container">  
-                        <div class="row">  
-                            <div class="col-12 p-1">  
-                                <label class="form-label">Brand Name<span class="text-danger">*</span></label>  
-                                <input type="text" name="name" class="form-control" id="name">  
-                            </div> 
-                            <div class="col-12 p-1">  
-                                <label class="form-label">Brand Description<span class="text-danger">*</span></label>  
-                                <input type="text" name="description" class="form-control" id="description">  
-                            </div>                        
-                        </div>                    
-                    </div>                
-                </form>            
-            </div>            
-	        <div class="modal-footer">  
-	            <button id="modal-close" class="btn commonCloseButton" data-bs-dismiss="modal" aria-label="Close">Close</button>  
-	            <button onclick="Save()" id="save-btn" class="btn commonSaveButton" >Save</button>  
-	        </div>       
-        </div>    
-    </div>
-</div>
-```
-
-```js
-// uniquness check korar jonno evabe try catch korte hoy ta na hole axios kaj hobe na.
-async function save() {  
-    let name = document.getElementById('name').value;  
-    let description = document.getElementById('description').value;  
-    
-    if (name.trim().length === 0) {  
-        errorToast("Name is Required !")  
-    } else if (description.trim().length === 0) {  
-        errorToast("Description is Required !")     
-    } else {  
-        try {  
-	        showloader();
-            let res = await axios.post('/partner/team-member-store', {  
-                name: name,  
-                description: description,   
-            });  
-            hideloader();
-            if (res.data['status'] === 'success') {  
-                document.getElementById('modal-close').click();  
-                successToast('Team Member Added successfully')  
-                document.getElementById('save-form').reset();  
-                window.location.reload(); // await getlist(); etao use kora jay, etar mane holo getList k ekhan hote call kora. 
-            } else {  
-                errorToast('Team Member Added Failed')  
-            }  
-        } catch (error) {  
-            // response(error); // eta ekta method, ekhan theke function call kora jabe common ekta function create kore 
-            if (error.response) {  
-                if (error.response.status === 500) {  
-                    errorToast("Server Error: Please try again later.");  
-                } else if (error.response.status === 422) {  // 422 is the status code for validation errors  
-                    let errors = error.response.data.messages;  
-                    for (let key in errors) {  
-                        if (errors.hasOwnProperty(key)) {  
-                            errors[key].forEach(message => {  
-                                errorToast(message);  
-                            });  
-                        }  
-                    }  
-                } else {  
-                    errorToast("Error: " + error.response.data.message || "Something went wrong!");  
-                }  
-            } else {  
-                errorToast(error.response.data.message);  
-            }  
-        }  
-    }  
-}
-```
-
-```php
-public function partnerStore(Request $request)  
-{  
-	try {
-	    $request->validate([  
-	        'name' => 'required|string|max:255|unique:clients,name',  
-	        'description' => 'required|string|max:255',    
-	        ], [  
-	            'name.unique' => 'The name has already been taken.',  
-	            'description.required' => 'The description is required.',    
-	    ]);  
-	    User::create($validated);
-		return response()->json(['status' => 'success', 'message' => 'User added successfully!']);
-    }
-    catch (\Illuminate\Validation\ValidationException $e) {  
-        // Handle validation errors , unique kina check korar jonno  
-        return response()->json(['error' => 'Validation failed.', 'details' => $e->errors()], 422);  
-    }
-    catch (\Exception $e) { 
-    // Handle other exceptions (e.g., database errors) 
-    return response()->json(['error' => 'An unexpected error occurred.', 'details' => $e->getMessage()], 500); 
-    }
-}
-```
-
-```js
-// Notification code start
-// Add link in the head of html template and Download this link,script from website
-<link href="{{asset('css/toastify.min.css')}}" rel="stylesheet" />
-<script src="{{asset('js/jquery-3.7.0.min.js')}}"></script>
-<script src="{{asset('js/toastify-js.js')}}"></script>
-//  axios use korte chaile may be cdn or axios js code download kore use kora lage jene nibe not sure 
 
 
-//Add this code in config.js ( Success and Error Toast  JavaScript code )
-function showLoader() {  
-    document.getElementById('loader').classList.remove('d-none')  
-}  
-function hideLoader() {  
-    document.getElementById('loader').classList.add('d-none')  
-}  
-  
-function successToast(msg) {  
-    Toastify({  
-        text: msg,  
-        gravity: "bottom", // `top` or `bottom`  
-        position: "center", // `left`, `center` or `right`  
-        className: "mb-5",  
-        duration: 3000,  
-        style: {  
-            background: "green",  
-        }  
-    }).showToast();  
-}  
-  
-function errorToast(msg) {  
-    Toastify({  
-        text: msg,  
-        gravity: "bottom", // `top` or `bottom`  
-        position: "center", // `left`, `center` or `right`  
-        className: "mb-5",  
-        duration: 3000,  
-        style: {  
-            background: "red", // style er vetore aro onk kichu add kora jabe 
-        }  
-    }).showToast();  
-}
 
 
-// Alternative code for notification
-function successToast(msg) {  
-    Toastify({  
-		text: msg,  
-        gravity: "bottom", // `top` or `bottom`  
-        position: "center", // `left`, `center` or `right`  
-        className: "mb-5",  
-        style: {  
-            background: "green",  
-            color: "white", 
-            borderRadius: "5px", 
-            padding: "10px 20px", 
-            fontSize: "14px", 
-            zIndex: 99999,
-        }  
-    }).showToast();  
-}  
-function errorToast(msg) {
-	Toastify({
-		text: msg,
-		gravity: "bottom", 
-		position: "center",
-		className: "mb-5",
-		style: {
-			background: "red",
-			color: "white",
-			borderRadius: "5px",
-			padding: "10px 20px",
-			fontSize: "14px",
-			zIndex: 99999,
-		},
-	}).showToast();
-	}
-// notification end
-```
+
+
+
+
+
+
+
+
 ## ***12. Full using Axios ( Modal ar upor abar modal use korle )
 ```html 
 // button modal-1
