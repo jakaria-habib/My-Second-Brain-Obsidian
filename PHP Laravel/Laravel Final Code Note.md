@@ -1,4 +1,4 @@
-## ***1. Full Laravel Code with request validation alada rakhbe, Image gulo Helper method a rakhbe  
+### ***1c. Full Laravel Code with request validation alada rakhbe, Image gulo Helper method a rakhbe  
 ```html
 // Form start
 <div class="card">  
@@ -96,6 +96,9 @@ public function update(StoreUserRequest $request, $id) {
 	//    if ($user->image) ImageHelper::deleteImage($user->image);
 	//    $validated['image'] = ImageHelper::uploadImage('uploads', $request->file('image'));
 	// }
+	else { 
+		$validated['image'] = $user->image; 
+	}
     if (!empty($validated['password'])) {
         $validated['password'] = Hash::make($validated['password']);
     } else {
@@ -184,7 +187,7 @@ public static function deleteImage($path) {
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css" integrity="sha512-6S2HWzVFxruDlZxI3sXOZZ4/eJ8AcxkQH1+JjSe/ONCEqR9L4Ysq5JdT5ipqtzU7WHalNwzwBv+iE51gNHJNqQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 ```
-## ***2. Controller ar vetorei request validation and image soho sob rekhe kora, uporer  code ta best, follow uporer code
+### ***2c. Controller ar vetorei request validation and image soho sob rekhe kora, uporer  code ta best, follow uporer code
 ```php
 // Store code laravel
 public function store(Request $request) {
@@ -227,11 +230,11 @@ public function store(Request $request) {
 }
 
 // Update code laravel
- public function update(Request $request) {
+ public function update(Request $request User $user) {
 	try{	  
 	   $validated = $request->validate([
-			'name' => 'required|string|max:255|unique:users,name',
-			'email' => 'required|email|unique:users,email',
+			'name' => 'required|string|max:255|unique:users,name'.$user->id,
+			'email' => 'required|email|unique:users,email'.$user->id,
 			'image' => 'nullable|image|mimes:jpg,jpeg,png,gif|max:2048',
 			'password' => 'required|string|min:8|confirmed',
 		], [
@@ -253,9 +256,13 @@ public function store(Request $request) {
 		    $file->move(public_path('uploads'), $imageUrl);
 		    $validated['image'] = $imageUrl;
 		}
+		else { 
+			$validated['image'] = $user->image; 
+		 }
+		 
 		$validated['password'] = Hash::make($validated['password']);
 		
-		$user = User::create($validated);
+		$user->update($validated);
 		
 		return response()->json(['status' => 'success', 'message' => 'User created successfully','user' = $user ]);
 	}
@@ -269,7 +276,7 @@ public function store(Request $request) {
 	}
 }
 ```
-## 3. ***Full Axios Code with request validation alada rakhbe, Image gulo Helper method a rakhbe 
+### 3c. ***Full Axios Code with request validation alada rakhbe, Image gulo Helper method a rakhbe 
 ```html
 <button data-bs-toggle="modal" data-bs-target="#create-modal" class="createBrandButton">  
     <i class="bi bi-plus-circle"></i> Create Brand  
@@ -539,7 +546,7 @@ function errorToast(msg) {
 	}
 // notification end
 ```
-## 4. Java Script and Laravel Notification Code
+### 4c. Notification laravel, js
 ```html
 // Start JavaScript Notification Code
 
@@ -669,7 +676,7 @@ if (categoryName.length === 0) {
 // controller code ar return amon hote hobe
 return response()->json(['status' => 'success', 'message' => 'User added successfully!']);
 ```
-## 5. JavaScript Show Loader and Hide Loader Code
+### 5c. Show Loader and Hide Loader js
 ```JavaScript
 // 1. Add this in view blade file  
 // just for example
@@ -712,7 +719,7 @@ function hideLoader() {
 }
 ```
 
-## 6. Validation Code  Example
+### 6c. Validation Code  Example
 
 ```JavaScript 
 if(!checkValidation()){  // this means false
@@ -728,7 +735,7 @@ function checkValidation() {
 }
 ```
 
-## 7. Dropdown list using select option with Select2 with Image
+### 7c. Dropdown list with image using select2 
 
 ```Html & JavaScript
 // link
@@ -774,7 +781,7 @@ function checkValidation() {
 
 ```
 
-## 8. Normal Modal and Delete Modal form  with Bootstrap
+### 8c. Modal and Delete Modal form  with Bootstrap
  ```html
  
 // Normal Modal start
@@ -888,7 +895,7 @@ function checkValidation() {
 
 // Delete Modal End
 ```
-## 9. Eye Icon in password field
+### 9c. Eye Icon in password field
 
 ```html 
 //password
@@ -983,7 +990,102 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-## ***12. Full using Axios ( Modal ar upor abar modal use korle )
+### 10c. Hover korle modal open hobe
+```html
+<button id="hover-btn" class="btn m-0 badge bg-secondary">How does it work?</button>
+
+<div class="modal modal-xl animated zoomIn smooth-modal" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">  
+	<div class="modal-dialog modal-dialog-centered modal-md">  
+		<div class="modal-content">  
+			<div class="modal-header">  
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
+			</div>                        
+			<div class="modal-body">  
+				<form id="save-form">  
+					<div class="container">  
+						<div class="row">  
+							<div class="col-12 p-1">  
+								<h4>Website Objective: <span style="color:#2f322c">Premium Ad</span></h4>  
+									<p>Premium Ad is a comprehensive service platform designed to empower. Below is a structured description of the website's objective:</p>  
+								<h4>Key Features and Offerings:</h4>  
+								<h5 class="premiumAdDes">1. Ad Content Creation:</h5>  
+									<ul class="premiumAdDes">  
+										<li>Create custom posts tailored for various advertising needs.</li>  
+										<li>Generate photo advertisements with professional-grade tools.</li>  
+										<li>Develop engaging ad texts to capture audience attention.</li>  
+										<li>Produce high-quality ad videos for impactful marketing.</li>  
+									</ul>                                          
+								<h5 class="premiumAdDes">2. Brand Creation:</h5>  
+									<ul class="premiumAdDes">  
+										<li>Primary Requirement: Users must create a brand to access the platform's features.</li>  
+										<li>The brand serves as the foundation for organizing all advertising activities, ensuring consistency and professionalism.</li>  
+										<li>Without creating a brand, users cannot proceed to create posts, photos, videos, or other ad content.</li>  
+									</ul>                                                              
+							</div>                                    
+						</div>                                
+					</div>                            
+				</form>                        
+			</div>                       
+			<div class="modal-footer">  
+				<button id="modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>
+			</div>  
+		</div>                
+	</div>            
+</div>
+```
+```js
+<script>  
+    document.addEventListener("DOMContentLoaded", () => {  
+        const hoverBtn = document.getElementById("hover-btn");  
+        const createModalEl = document.getElementById("create-modal");  
+        const createModal = new bootstrap.Modal(createModalEl);  
+        // Avoid redundant modal triggers  
+        let isModalOpen = false;  
+  
+        // Show the modal on hover  
+        hoverBtn.addEventListener("mouseover", () => {  
+            if (!isModalOpen) {  
+                createModal.show();  
+                isModalOpen = true;  
+            }  
+        });  
+  
+        // Detect when the modal is closed to reset state  
+        createModalEl.addEventListener("hidden.bs.modal", () => {  
+            isModalOpen = false;  
+        });  
+    });  
+</script>  
+  
+<style>  
+    .modal-backdrop {  
+        transition: opacity 0.3s ease;  
+        background-color: rgba(0, 0, 0, .5); /* Darker backdrop */  
+    }  
+  
+    .modal-backdrop.show {  
+        opacity: 0.8; /* Higher opacity for the backdrop when modal is open */  
+    }  
+  
+    /* Modal content transition */  
+    .modal-content {  
+        transition: transform 0.3s ease, opacity 0.3s ease;  
+    }  
+  
+    .modal.fade .modal-dialog {  
+        transform: translateY(-10%);  
+        opacity: 0;  
+    }  
+  
+    .modal.show .modal-dialog {  
+        transform: translateY(0);  
+        opacity: 1;  
+    }  
+</style>
+```
+
+
+### ***12. Full using Axios ( Modal ar upor abar modal use korle )
 ```html 
 // button modal-1
 <div class="col-md-6 text-end">  
@@ -1128,7 +1230,7 @@ public function createBrand(Request $request) {
 }
 // php end
 ```
-## ***13. Full using Axios ( Card use kore, single input field ar jonno code )
+### ***13. Full using Axios ( Card use kore, single input field ar jonno code )
 ```html
 //html start
 	<div class="card">  
@@ -1246,7 +1348,7 @@ public function createBrand(Request $request) {
 
 // php end
 ```
-## 14. Different approach of controller validation
+### 14c. Different approach of controller validation
 ```php
 // some approach of validation start
  $validated = $request->validate([  
@@ -1373,111 +1475,7 @@ async function brandSave() {
     }  
 }
 ```
-## 15. Hover korle modal open hobe
-```html
-<button id="hover-btn" class="btn m-0 badge bg-secondary">How does it work?</button>
-
-<div class="modal modal-xl animated zoomIn smooth-modal" id="create-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">  
-                <div class="modal-dialog modal-dialog-centered modal-md">  
-                    <div class="modal-content">  
-                        <div class="modal-header">  
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>  
-                        </div>                        <div class="modal-body">  
-                            <form id="save-form">  
-                                <div class="container">  
-                                    <div class="row">  
-                                        <div class="col-12 p-1">  
-                                            <h4>Website Objective: <span style="color:#2f322c">Premium Ad</span></h4>  
-                                                <p>Premium Ad is a comprehensive service platform designed to empower. Below is a structured description of the website's objective:</p>  
-                                            <h4>Key Features and Offerings:</h4>  
-                                            <h5 class="premiumAdDes">1. Ad Content Creation:</h5>  
-                                                <ul class="premiumAdDes">  
-                                                    <li>Create custom posts tailored for various advertising needs.</li>  
-                                                    <li>Generate photo advertisements with professional-grade tools.</li>  
-                                                    <li>Develop engaging ad texts to capture audience attention.</li>  
-                                                    <li>Produce high-quality ad videos for impactful marketing.</li>  
-                                                </ul>                                           <h5 class="premiumAdDes">2. Brand Creation:</h5>  
-                                                <ul class="premiumAdDes">  
-                                                    <li>Primary Requirement: Users must create a brand to access the platform's features.</li>  
-                                                    <li>The brand serves as the foundation for organizing all advertising activities, ensuring consistency and professionalism.</li>  
-                                                    <li>Without creating a brand, users cannot proceed to create posts, photos, videos, or other ad content.</li>  
-                                                </ul>                                           <h5 class="premiumAdDes"> 3. User Permissions:</h5>  
-                                                <ul class="premiumAdDes">  
-                                                    <li>If a user has not yet created a brand, they will be prompted to do so.</li>  
-                                                    <li>A dedicated "Create Brand" button allows users to seamlessly start their branding process.</li>  
-                                                </ul>                                            <h5 class="premiumAdDes">4. Seamless Workflow:</h5>  
-                                                <ul class="premiumAdDes">  
-                                                    <li>After creating a brand, users gain access to all ad creation tools.</li>  
-                                                    <li>An intuitive interface ensures easy navigation and efficient workflow management.</li>  
-                                                </ul>                                            <h5 class="premiumAdDes">5. Purpose:</h5>  
-                                                <ul class="premiumAdDes">  
-                                                    <li>To simplify the advertisement creation process for businesses and individuals.</li>  
-                                                    <li>To help users establish their brand identity before diving into marketing campaigns.</li>  
-                                                    <li>To provide all essential tools in one platform for consistent and high-quality ad production.</li>  
-                                                </ul>                                            <h5 class="premiumAdDes">6. Target Audience:</h5>  
-                                                <ul class="premiumAdDes">  
-                                                    <li>Small, Medium and Big-sized businesses seeking professional ad creation tools.</li>  
-                                                    <li>Content creators and marketers aiming to enhance their advertising impact.</li>  
-                                                    <li>Individuals who need a simple yet powerful platform to create branded advertisements.</li>  
-                                                </ul>                                        </div>                                    </div>                                </div>                            </form>                        </div>                        <div class="modal-footer">  
-{{--                            <button id="modal-close" class="btn bg-gradient-primary" data-bs-dismiss="modal" aria-label="Close">Close</button>--}}  
-                        </div>  
-                    </div>                </div>            </div>
-
-
-```
-```js
-<script>  
-    document.addEventListener("DOMContentLoaded", () => {  
-        const hoverBtn = document.getElementById("hover-btn");  
-        const createModalEl = document.getElementById("create-modal");  
-        const createModal = new bootstrap.Modal(createModalEl);  
-  
-        // Avoid redundant modal triggers  
-        let isModalOpen = false;  
-  
-        // Show the modal on hover  
-        hoverBtn.addEventListener("mouseover", () => {  
-            if (!isModalOpen) {  
-                createModal.show();  
-                isModalOpen = true;  
-            }  
-        });  
-  
-        // Detect when the modal is closed to reset state  
-        createModalEl.addEventListener("hidden.bs.modal", () => {  
-            isModalOpen = false;  
-        });  
-    });  
-</script>  
-  
-<style>  
-    .modal-backdrop {  
-        transition: opacity 0.3s ease;  
-        background-color: rgba(0, 0, 0, .5); /* Darker backdrop */  
-    }  
-  
-    .modal-backdrop.show {  
-        opacity: 0.8; /* Higher opacity for the backdrop when modal is open */  
-    }  
-  
-    /* Modal content transition */  
-    .modal-content {  
-        transition: transform 0.3s ease, opacity 0.3s ease;  
-    }  
-  
-    .modal.fade .modal-dialog {  
-        transform: translateY(-10%);  
-        opacity: 0;  
-    }  
-  
-    .modal.show .modal-dialog {  
-        transform: translateY(0);  
-        opacity: 1;  
-    }  
-</style>
-```
-## 17. Button a click korle Modal show korbe with image code select2 diye kora
+### 17. Button a click korle Modal show korbe with image code select2 diye kora
 ```html
    {{--    upload modal start--}}  
     <div class="modal animated zoomIn" id="upload-image-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">  
@@ -1571,7 +1569,7 @@ function uploadModalClose(){
 // upload image end
 ```
 
-## 18. search
+### 18. Search
 ```js
 @extends('partner.layouts.app')  
 @section('page')  
@@ -1854,7 +1852,7 @@ function uploadModalClose(){
   
 {{--@stop--}}
 ```
-## 19. Normal search ( search ar input field a search dibo likhbo then etar sathe card theke miliye jegula mile segula niye asbo )
+### 19. Normal search ( search ar input field a search dibo likhbo then etar sathe card theke miliye jegula mile segula niye asbo )
 ```html
 <div class="col-md-2 search-box">  
     <input type="text" id="searchInput" placeholder="Search">  
@@ -1870,7 +1868,7 @@ function uploadModalClose(){
                 <p>1 Project Created</p>  
             </div>        </a>    </div>@endforeach
 ```
-## 23. Date Picker
+### 23. Date Picker
 ```php
 	$startDate = '2025-01-01';
 	$endDate = '2025-01-31';
@@ -1881,12 +1879,12 @@ function uploadModalClose(){
 	
 	return $records;
 ```
-## 24c. foreign Id casecade on update and delete
+### 24c. Foreign Id casecade on update and restrict on delete
 ```js
 $table->foreignId('user_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
-$table->foreignId('category_id')->constrained()->cascadeOnUpdate()->restrictOnDelete();
+$table->foreignId('user_id')->constrained()->cascadeOnUpdate()->cascadeOnDelete();
 ```
-## 25. Dropdown hote kono akta Brand select kora then ei brand ar under ar image gulo db hote search kore niye asar code
+### 25. Dropdown hote kono akta Brand select kora then ei brand ar under ar image gulo db hote search kore niye asar code
 ```php
  public function fetchImageByBrandId(Request $request){  
         try{  
@@ -1956,7 +1954,7 @@ $(document).ready(function () {
 //        $partner = Auth::user()->partner()->first();  
 //        $brands = Brand::where('partner_id',$partner->id)->orderBy('id','desc')->get();
 ```
-## 26c. Button a click kore Modal open hobe then Modal ar Dropdown hote Brand select kora and Image input hisebe newa tapor Save button a click korle DB a save hobe and ei upload kora image tai prothome show korar code
+### 26c. Button a click kore Modal open hobe then Modal ar Dropdown hote Brand select kora and Image input hisebe newa tapor Save button a click korle DB a save hobe and ei upload kora image tai prothome show korar code
 ```html
 <button onclick="uploadBrandImage()" class="action-btn me-3"><i class="bi bi-upload me-2"></i>Upload</button>  
   
@@ -2151,7 +2149,7 @@ async function uploadLibraryImage(){
         }  
     }
 ```
-## 28. Moinul vai image file create edit update
+### 28. Moinul vai image file create edit update
 ```php
 
 // create part
@@ -2387,7 +2385,7 @@ public function createPartnerBrand(Request $request)
     }  
 }
 ```
-## 29c. Date Picker Range dile se onujayi image db hote niye asbe,abar image k delete,download kora jabe ei code diye
+### 29c. Date Picker Range dile se onujayi image db hote niye asbe,abar image k delete,download kora jabe ei code diye
 ![[date_picker_img 1.png]]
 ```html
 <!-- Date Range Picker select button start -->  
@@ -2564,7 +2562,7 @@ $(document).ready(function () {
 	} 
 // for download end
 ```
-## 30. map function use kora hoyeche ekhane , controller a jodi map function use kora hoy tahole image ar extra address like asset ta ekhan thekei diye deya hoy r jodi controller a map use na kori tahole js a giye assest add kore dite hobe. ekhane comment out korata map ar kaj. ekhane ami map use kori nai js a giye kaj korchi. 
+### 30. map function use kora hoyeche ekhane , controller a jodi map function use kora hoy tahole image ar extra address like asset ta ekhan thekei diye deya hoy r jodi controller a map use na kori tahole js a giye assest add kore dite hobe. ekhane comment out korata map ar kaj. ekhane ami map use kori nai js a giye kaj korchi. 
 ```php
     public function fetchImageByBrandId(Request $request){  
         try{  
@@ -2630,23 +2628,388 @@ $('#brand_name_search').on('change', async function () {
     });  
 });
 ```
-## 31. Laravel single table Migration and Rollback code 
+### 31c. Single Migration and Rollback in Laravel for single table, Add single column in existing table 
 ```php
 
-	// specific migration
+	// Add single column in existing table
+	 php artisan make:migration add_full_name_to_partners_table 
+	
+	// Migration single table/column
 	php artisan migrate --path=database/migrations/2025_01_11_123456_create_table_name.php
-	// specific rollback
+	
+	// Rollback single table/column 
 	php artisan migrate:rollback --path=/database/migrations/2024_01_01_123456_create_table_name.php
 	
+	// Migration create ar por migration table a jodi kono akta table column ar pore use korte chia tahole, up table a uporer ta r down table a nicher ta use korte hobe
+	$table->string('tag_name')->nullable()->after('deal_type');
+	$table->dropColumn('tag_name');
 ```
-## 32. Laravel image create code Habib sir
+### 32. Image related code
 ```php
+// image create code by habib sir
 $image = $request->file('image');  
 $imageExtension       = $image->getClientOriginalExtension(); // .png  
 $imageName            = time().'.'.$imageExtension; //394833.png  
 $directory            = 'library-upload-images/';  
 $image->move($directory, $imageName);  
 $imageURL = $directory.$imageName;
+
+// image edit code  , not completed yet solve this when get time
+$product = Product::find($id);    
+if($request->hasFile('image')) {  
+  if(file_exists($product->image))  
+  {  
+      unlink($product->image);  
+  }  
+  self::$imageURL = getImageURL($request) ;  
+}  
+else  
+{  
+    self::$imageURL = self::$product->image ;  
+}
+
+
+// image create korle sathe sathe image show korbe form a 
+<img id="newImg" src="{{asset('assets/img/default.jpg')}}" style="width: 70px;height: 45px;"/>  
+<div class="mb-3">  
+    <label class="custom-control-label">Customer Image</label>  
+    <input oninput = "newImg.src = window.URL.createObjectURL(this.files[0])" type="file" class="form-control" name="customer_image">  
+</div>
+
 ```
+### 33. tab ar moto kore All, Food, Architecture, Nature jekhanei click kori tar image gulo db hote niye asbe
+```html
 
+<div class="category-buttons mb-3 text-center">  
+    <button class="btn btn-primary active me-2" onclick="filterImages('all', this)">All</button>  
+    @foreach($imageCategories as $imageCategory)  
+        <button class="btn btn-outline-primary me-2" onclick="filterImages({{ $imageCategory->id }}, this)">  
+            {{ $imageCategory->category_name }}  
+        </button>  
+    @endforeach  
+</div>  
+  
+<div class="image-grid">  
+    <div class="row g-4" id="chooseImage">  
+  
+    </div>
+</div>
+```
+```js
+// Start Choose image/stock image js code  
+async function filterImages(imageCategoryId = null, button = null) {
+    try {
+        let categoryId = imageCategoryId === 'all' ? '' : imageCategoryId;
+        
+        let res = await axios.post('/partner/category-wise-images', { imageCategoryId: categoryId });
+        
+        lett container = document.getElementById('chooseImage');
+        container.innerHTML = ''; // Clear the image container
+        // Populate images
+        res.data.images.forEach(function (item) {
+            let imageDiv = document.createElement('div');
+            imageDiv.className = "col-md-3 col-sm-6";
+            imageDiv.innerHTML = `
+                <div class="image-card">
+                    <img src="${item.image_path}" alt="Image" class="img-fluid picker-image" onclick="selectLibraryImage('${item.image_path}')">
+                    <div class="overlay-icon">
+                        <i class="bi bi-heart-fill"></i>
+                    </div>
+                </div>
+            `;
+            container.appendChild(imageDiv);
+        });
 
+        // Handle button styling
+        if (imageCategoryId != null) {
+            document.querySelectorAll('.category-buttons button').forEach(btn => {
+                btn.classList.remove('btn-primary', 'active');
+                btn.classList.add('btn-outline-primary');
+            });
+
+            if (button) {
+                button.classList.remove('btn-outline-primary');
+                button.classList.add('btn-primary', 'active');
+            }
+        }
+    } catch (error) {
+        console.error("Error fetching images:", error);
+        alert("Failed to load images. Please try again.");
+    }
+}
+// End Stock Image js code
+```
+### 34c. Select option Edit korar jonno code , db hote code niye asa and match kora
+```php
+// Blade file code
+<div class="mb-3">  
+    <label class="custom-control-label">Tag Name</label>  
+    <select class="form-select" name="tag_name">  
+        @foreach($tags as $tag)  
+            <option value="{{ $tag->name }}" {{ $tag->name == $deal->tag_name ? 'selected' : '' }}>{{ $tag->name }}</option>  
+        @endforeach  
+    </select>  
+</div>
+
+// Controller code
+public function edit(Deal $deal) {  
+    $tags = Tag::all();  
+    return view('deals.edit',['deal'=>$deal,'tags' => $tags]);  
+}
+```
+### 35c. Multiple Tag dropdown theke add korar jonno Create and Edit update
+```php
+// Create or Store code start
+// blade html code start
+<div class="mb-3">  
+    <label class="custom-control-label">Tag Name</label>  
+    <select class="form-select select2" multiple="multiple" name="tag_name[]" id="tag_name">  
+        @foreach($tags as $tag)  
+            <option value="{{ $tag->name }}">{{ $tag->name }}</option>  
+        @endforeach  
+    </select>  
+</div>
+
+// blade js code start
+<!-- jQuery & Select2 -->  
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>  
+  
+<script>  
+    $(document).ready(function() {  
+        $('#tag_name').select2({  
+            placeholder: "Enter tags",  
+            allowClear: true  
+        });  
+    });  
+</script>
+
+// Controller code start
+$deal->tag_name = is_array($request->tag_name) ? implode(',', $request->tag_name) : $request->tag_name;
+
+// jodi request validate diye kori tahole code holo
+$request->validate([
+    'tag_name' => 'required|array', // Must be an array
+]);
+$validated['tag_name'] = implode(',', $validated['tag_name']);
+// Controller code end
+// Create or Store code end
+
+// Edit Update code start
+// blade html code start
+<div class="mb-3">  
+    <label class="custom-control-label">Tag Name</label>  
+    <select class="form-select select2" multiple="multiple" name="tag_name[]" id="tag_name">  
+        @foreach($tags as $tag)  
+            <option value="{{ $tag->name }}"  
+                    {{ in_array($tag->name, explode(',', $deal->tag_name)) ? 'selected' : '' }}>  
+                {{ $tag->name }}  
+            </option>  
+        @endforeach  
+    </select>  
+</div>
+// blade html code end
+
+// blade js code start
+<!-- jQuery & Select2 -->  
+<link href="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/css/select2.min.css" rel="stylesheet" />  
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>  
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>  
+  
+<script>  
+    $(document).ready(function() {  
+        $('#tag_name').select2({  
+            placeholder: "Enter tags",  
+            allowClear: true  
+        });  
+    });  
+</script>
+// blade js code end
+
+// controller start
+$deal->tag_name = is_array($request->tag_name) ? implode(',', $request->tag_name) : $request->tag_name;
+// jodi request validate diye kori tahole code holo
+$request->validate([
+    'tag_name' => 'required|array', // Must be an array
+]);
+$validated['tag_name'] = implode(',', $validated['tag_name']);
+// controller end
+```
+### 36c. User Register korar somoy  Email theke University name niye University Table a add korar code 
+```php
+public function registerApi(Request $request) {
+
+	$user = new User;  
+	$user->email = $request->email;  
+	$user->save();
+
+	// joto email pabe sob email ar @ ar por theke prothom full stop porjonto niye University Model a add kore dibe  jemon  'jakaria@ruet.edu' ekhane 'ruet' add korbe
+	$emailParts = explode('@', $request->email);  
+	if (count($emailParts) == 2) {  
+	    $universityName = explode('.', $emailParts[1])[0]; // ডট (.) আসার আগের অংশ নেব  
+	    $universityName = strtoupper($universityName); // ক্যাপিটাল লেটার এ পরিবর্তন
+	} else {  
+	    $universityName = null;  
+	}  
+	if ($universityName) {  
+	    University::firstOrCreate(['name' => $universityName, 'location' => 'dhaka']);  //  name + location দুই ফিল্ড দিয়েই খুঁজবে, jodi db te na thake tahole new field  create korbe
+	}
+
+	//same university name already university table a exist korle tahole r add korbe na ei code diye. 
+	$emailParts = explode('@', $request->email);  
+	if (count($emailParts) == 2) {  
+	    $universityName = explode('.', $emailParts[1])[0]; // ডট (.) আসার আগের অংশ নেব  
+	    $universityName = strtoupper($universityName); // ক্যাপিটাল লেটার এ পরিবর্তন  
+	} else {  
+	    $universityName = null;  
+	}  
+	if ($universityName) {  
+	    University::firstOrCreate(  
+	        ['name' => $universityName], // চেক করবে যদি name ইতোমধ্যেই থাকে,  যদি না থাকে তবে নতুন name, location রেকর্ড তৈরি করবে  
+	        ['location' => 'dhaka'] // others field jemon ['city' => 'khulna'] jodi thake tahole ekhane dibo na dileo problem nei jehetu nullable kora ache, ['location' => ''] eta na dileo problem nei auto null hisebe nibe. 
+	    );  
+	}
+}
+```
+// uporer code ar difference table eta
+![[firstorCreateMethod.png]]
+### 37c. Api diye pagination kore db hote data niye asa
+```php
+// customize kora jabe ekhane paginate() k
+public function dealsByTagName(Request $request){  
+    $size = $request->size ?? 10;  
+    $page = $request->page ?? 2;  
+    $dealsByTagName = Deal::where('tag_name', 'like', '%' . $request->tag_name . '%')->orderByDesc('id')->paginate($size, ['*'], 'page', $page);  
+    return $this->returnSuccess("Deals By Tag Name", $dealsByTagName);  
+}
+// default use kora jonno like page 1 theke shuru hobe 
+public function dealsByTagName(Request $request){
+    $size = $request->input('size', 10);  // Default value for size  
+    $page = $request->input('page', 1);   // ekhane  $page = $request->input('page', 1); use na korleo hobe, use na korle default page 1 hisebe nibe paginate($size) likhar karone
+    $dealsByTagName = Deal::where('tag_name', 'like', '%' . $request->tag_name . '%')->orderByDesc('id')->paginate($size);  // Use paginate for automatic handling of skip/take   
+    return $this->returnSuccess("Deals By Tag Name", $dealsByTagName);  
+}
+// evabeo kora jay skip diye 
+public function dealsByTagName(Request $request){  
+  
+    $size = $request->size?$request->size:10;  
+    $page = $request->page?$request->page:1;  
+    $skip = ($page - 1) * $size;  
+    $dealsByTagName = Deal::where('tag_name', 'like', '%' . $request->tag_name . '%')->skip($skip)->take($size)->orderByDesc('id')->get();  
+    return $this->returnSuccess("Deals By Tag Name",$dealsByTagName);  
+}
+```
+### 38. Data Table full
+```js
+// Rabbil via Data table
+// data table css
+<link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />  
+//data table js  
+<script src="{{asset('js/jquery-3.7.0.min.js')}}"></script>  
+<script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+
+// html blade a eta rakhbe 
+<hr class="bg-dark "/>  
+<table class="table" id="tableData">  
+	<thead>        
+		<tr class="bg-light">  
+			<th>No</th>  
+			<th>Image</th>  
+			<th>Name</th>  
+			<th>Price</th>  
+			<th>Unit</th>  
+			<th>Action</th>  
+		</tr>    
+	</thead>    
+	<tbody id="tableList">  
+	  
+	</tbody>
+</table>
+// html blade ar js code
+$(document).ready(function() {
+	new DataTable('#tableData',{  
+	    order:[[0,'desc']],  
+	    lengthMenu:[10,15,20,30]  
+	});
+}
+				  
+
+// Yajra Data Table
+//terminal or cmd a install koro
+composer require yajra/laravel-datatables-oracle
+// tarpor baki sob ager moto
+// data table css
+<link href="{{asset('css/jquery.dataTables.min.css')}}" rel="stylesheet" />  
+//data table js  
+<script src="{{asset('js/jquery-3.7.0.min.js')}}"></script>  
+<script src="{{asset('js/jquery.dataTables.min.js')}}"></script>
+
+// html blade a eta rakhbe 
+<hr class="bg-dark "/>  
+<table class="table" id="tableData">  
+	<thead>        
+		<tr class="bg-light">  
+			<th>No</th>  
+			<th>Image</th>  
+			<th>Name</th>  
+			<th>Price</th>  
+			<th>Unit</th>  
+			<th>Action</th>  
+		</tr>    
+	</thead>    
+	<tbody id="tableList">  
+	  
+	</tbody>
+</table>
+// html blade ar js code
+$(document).ready(function() {
+	new DataTable('#tableData',{  
+	    order:[[0,'desc']],  
+	    lengthMenu:[10,15,20,30]  
+	});
+}
+
+// pdf , print agular dorkar hole ei code use koro (ei link use korle details janta parbe : https://datatables.net/extensions/buttons/examples/initialisation/export.html)
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>  
+<script src="https://cdn.datatables.net/2.2.1/js/dataTables.js"></script>  
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/dataTables.buttons.js"></script>  
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.dataTables.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>  
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.html5.min.js"></script>  
+<script src="https://cdn.datatables.net/buttons/3.2.0/js/buttons.print.min.js"></script>  
+  
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.1/css/dataTables.dataTables.css">  
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/3.2.0/css/buttons.dataTables.css">  
+  
+<script>  
+    new DataTable('#datatablesSimple', {  
+        layout: {  
+            topStart: {  
+                buttons: ['copy', 'csv', 'excel',  
+                    {  
+                        extend: 'pdfHtml5',  
+                        text: 'PDF',  
+                        orientation: 'landscape', // Change to portrait if needed  
+                        pageSize: 'A4',  
+                        exportOptions: {  
+                            modifier: {  
+                                page: 'all' // Export all pages  
+                            },  
+                            columns: ':visible' // Export only visible columns  
+                        }  
+                    },  
+  
+                    'print']  
+            }  
+        },  
+        searching: false,  
+        paging: false,  
+        language: {  
+            info: ""  
+        }  
+    });  
+</script>
+```
